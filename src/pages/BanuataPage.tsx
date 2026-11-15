@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, Database, Home, Info, Landmark, Menu, RefreshCw, Search, Users, X } from 'lucide-react'
+import { ChevronDown, ChevronUp, Database, Home, Landmark, Menu, RefreshCw, Search, Users, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import banuataHero from '../assets/banuata_hero_bg.png'
@@ -294,7 +294,6 @@ function DirectoryPanel({ type }: { type: Directory }) {
 export default function BanuataPage() {
   const { pathname } = useLocation()
   const isHome = pathname === '/'
-  const isAbout = pathname === '/tentang'
   const isTenaga = pathname === '/data-tenaga'
   const isLembaga = pathname === '/data-lembaga'
 
