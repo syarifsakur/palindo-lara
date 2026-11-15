@@ -1,13 +1,15 @@
 import { ArrowUpRight, Menu, Search, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import palindoLogo from '../../assets/PALINDO LARA.png'
+import banuataLogo from '../../assets/banuata-logo.png'
 
 const navLinks = [
   { to: '/', label: 'Beranda', num: '01' },
-  { to: '/jelajah', label: 'Jelajah Budaya', num: '02' },
-  { to: '/berita', label: 'Berita', num: '03' },
-  { to: '/tentang', label: 'Tentang Kami', num: '04' },
+  { to: '/#deskripsi', label: 'Tentang Banua’ta', num: '02' },
+  { to: '/#tenaga', label: 'Data Tenaga', num: '03' },
+  { to: '/#lembaga', label: 'Data Lembaga', num: '04' },
+  { to: '/jelajah', label: 'Jelajah Budaya', num: '05' },
+  { to: '/berita', label: 'Berita', num: '06' },
 ]
 
 export default function Header() {
@@ -21,18 +23,30 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close mobile menu on route change
-  useEffect(() => {
+  const [currentPath, setCurrentPath] = useState(location.pathname + location.hash)
+  if (currentPath !== location.pathname + location.hash) {
+    setCurrentPath(location.pathname + location.hash)
     setMenuOpen(false)
-  }, [location.pathname])
+  }
+
+  const handleNavClick = (to: string) => {
+    setMenuOpen(false)
+    if (to.startsWith('/#')) {
+      const id = to.replace('/#', '')
+      const el = document.getElementById(id)
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
 
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}`}>
       <div className="header-inner">
-        <Link className="brand" to="/" aria-label="Beranda Kebudayaan Sulawesi Tengah">
-          <img className="brand-logo" src={palindoLogo} alt="Palindo Lara" />
+        <Link className="brand" to="/" aria-label="Beranda BANUA’TA Sulawesi Tengah">
+          <img className="brand-logo h-10 max-w-[150px] object-contain" src={banuataLogo} alt="BANUA’TA" />
           <span className="brand-divider" />
-          <span className="brand-context">Portal<br />Kebudayaan</span>
+          <span className="brand-context font-serif tracking-wide text-xs">Basis Data<br /><strong className="text-amber-500 font-bold">Budaya Sulteng</strong></span>
         </Link>
 
         <button
@@ -48,9 +62,9 @@ export default function Header() {
           {navLinks.map((link) => (
             <Link
               key={link.to}
-              className={location.pathname === link.to ? 'active' : ''}
+              className={location.pathname === link.to || (link.to.startsWith('/#') && location.hash === link.to.replace('/', '')) ? 'active' : ''}
               to={link.to}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => handleNavClick(link.to)}
             >
               <span>{link.num}</span> {link.label}
             </Link>
@@ -58,8 +72,8 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          <button className="search-button" aria-label="Cari"><Search size={17} /></button>
-          <Link className="header-cta" to="/jelajah">Jelajahi <ArrowUpRight size={15} /></Link>
+          <a className="search-button" href="#tenaga" aria-label="Cari Data"><Search size={17} /></a>
+          <a className="header-cta" href="#tenaga">Basis Data <ArrowUpRight size={15} /></a>
         </div>
       </div>
     </header>
