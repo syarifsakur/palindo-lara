@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useScrollReveal } from '../../hooks/useScrollReveal'
+import BanuataNavbar from './BanuataNavbar'
 import Footer from './Footer'
-import Header from './Header'
 
 export default function Layout() {
   const { pathname } = useLocation()
@@ -14,7 +14,7 @@ export default function Layout() {
 
   return (
     <div className="site-shell" ref={revealRef} id="top">
-      <Header />
+      <BanuataNavbar />
       <main>
         <Outlet />
       </main>
